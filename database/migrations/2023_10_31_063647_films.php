@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filmss', function (Blueprint $table) {
+        Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string('judul_film');
             $table->time('waktu');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filmss');
+        Schema::dropIfExists('films');
     }
 };

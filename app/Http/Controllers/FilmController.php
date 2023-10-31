@@ -39,7 +39,7 @@ class FilmController extends Controller
         $film->jumlah_tiket = $request->input('jumlah_tiket');
         $film->save();
 
-        return redirect()->route('films')->with('success', 'Data Berhasil Disimpan');
+        return redirect()->route('tiket.films')->with('success', 'Data Berhasil Disimpan');
     }
 
 
@@ -51,6 +51,15 @@ class FilmController extends Controller
         $data = Film::find($id);
         return view('editData', compact('data'));
  
+    }
+
+    public function tampilkandata($id)
+    {
+        // dd($id);
+        $data = Film::find($id);
+        // dd($data);
+
+        return view('page.admin.tiket.tampilfilm', compact('data'));
     }
 
     /**
@@ -76,7 +85,7 @@ class FilmController extends Controller
         $film = Film::find($id);
         $film->update($validatedData);
 
-        return redirect()->route('films')->with('success', 'Data Berhasil Diedit');
+        return redirect()->route('tiket.films')->with('success', 'Data Berhasil Diedit');
     }
 
     /**
@@ -86,6 +95,6 @@ class FilmController extends Controller
     {
         $data = Film::find($id);
         $data->delete();
-        return redirect()->route('films')->with('success','Data Berhasil Dihapus');
+        return redirect()->route('tiket.films')->with('success','Data Berhasil Dihapus');
     }
 }

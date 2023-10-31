@@ -13,7 +13,7 @@
     <h1 class="text-center mt-4 mb-4"> Pembelian Tiket Film Bioskop </h1>
 
     <div class="container">
-        <a href="/formfilm" class="btn btn-success mb-3" >Tambah</a>
+        <a href="{{ route('tiket.formfilm') }}" class="btn btn-success mb-3" >Tambah</a>
         <div class="row">
         @if ($message = Session::get('success'))
             <div class="alert alert-success" role="alert">
@@ -33,9 +33,12 @@
               </tr>
             </thead>
             <tbody>
+            @php
+              $no = 1;
+            @endphp
             @foreach ($data as $row)
                 <tr>
-                    <th scope="row">{{$row->id}}</th>
+                    <th scope="row">{{$no++}}</th>
                     <td>{{$row->judul_film}}</td>
                     <td>{{$row->waktu}}</td>
                     <td>{{$row->tanggal_pemesanan}}</td>
@@ -43,8 +46,8 @@
                     <td>{{$row->seat_kursi}}</td>
                     <td>{{$row->jumlah_tiket}}</td>
                     <td>
-                        <a href="/tampilkandata/{{$row->id}}"  class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-danger delete" data-id="{{$row->id}}" >Delete</a>
+                        <a href="{{ route('tiket.tampilkandata', ['id' => $row->id]) }}" class="btn btn-primary">Edit</a>
+                        <a href="#" class="btn btn-danger delete" data-id="{{$row->id}}">Delete</a>
                     </td>
                 </tr>
             @endforeach              
@@ -69,7 +72,7 @@
           confirmButtonText: 'Ya, hapus!'
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location ="/deletedata/"+jobid+""
+            window.location ="/dashboard/admin/tiket/destroy/"+jobid+""
             Swal.fire(
               'Terhapus!',
               'Data berhasil terhapus.',

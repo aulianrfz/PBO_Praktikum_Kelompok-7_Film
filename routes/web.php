@@ -52,7 +52,8 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::post('/store', [FilmController::class, 'store'])->name('store');
             Route::get('/show/{id}', [FilmController::class, 'show'])->name('show');
             Route::get('/film/{id}/edit', [FilmController::class, 'edit'])->name('edit');
-            Route::post('/film/{id}', [FilmController::class, 'update'])->name('update');
+            Route::post('/update/{id}', [FilmController::class, 'update'])->name('update');
+            Route::get('/tampilkandata/{id}',[FilmController::class, 'tampilkandata'])->name('tampilkandata');
             Route::get('/destroy/{id}', [FilmController::class, 'destroy'])->name('destroy');
         });
 });

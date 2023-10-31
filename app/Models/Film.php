@@ -9,6 +9,12 @@ class Film extends Model
 {
     use HasFactory;
 
-    protected $fillable=[]; 
-
+    protected $fillable = [
+        'judul_film',
+        'waktu',
+        'tanggal_pemesanan',
+        'row_kursi',
+        'seat_kursi',
+        'jumlah_tiket',
+    ];
 }
