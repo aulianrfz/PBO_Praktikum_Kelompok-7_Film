@@ -29,7 +29,7 @@ $links = [
         "is_multi" => true,
         "href" => [
             [
-                "section_text" => "Pemebelian Tiket",
+                "section_text" => "Pembelian Tiket",
                 "section_icon" => "far fa-money",
                 "section_href" => route('tiket.formfilm')
             ],

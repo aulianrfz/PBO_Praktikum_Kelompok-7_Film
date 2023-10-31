@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\FilmException; 
+
 use App\Models\Film;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Validation\ValidationException;
+
 
 class FilmController extends Controller
 {
@@ -28,20 +33,36 @@ class FilmController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    
+     public function store(Request $request)
     {
-        $film = new Film();
-        $film->judul_film = $request->input('judul_film');
-        $film->waktu = $request->input('waktu');
-        $film->tanggal_pemesanan = $request->input('tanggal_pemesanan');
-        $film->row_kursi = $request->input('row_kursi');
-        $film->seat_kursi = $request->input('seat_kursi');
-        $film->jumlah_tiket = $request->input('jumlah_tiket');
-        $film->save();
+        try {
+            // Perform data validation
+            $request->validate([
+                'judul_film' => 'required',
+                'waktu' => 'required',
+                'tanggal_pemesanan' => 'required',
+                'row_kursi' => 'required',
+                'seat_kursi' => 'required',
+                'jumlah_tiket' => 'required|integer',
+            ]);
 
-        return redirect()->route('tiket.films')->with('success', 'Data Berhasil Disimpan');
+            // If validation passes, create a new film
+            $film = new Film();
+            $film->judul_film = $request->input('judul_film');
+            $film->waktu = $request->input('waktu');
+            $film->tanggal_pemesanan = $request->input('tanggal_pemesanan');
+            $film->row_kursi = $request->input('row_kursi');
+            $film->seat_kursi = $request->input('seat_kursi');
+            $film->jumlah_tiket = $request->input('jumlah_tiket');
+            $film->save();
+
+            return redirect()->route('tiket.films')->with('success', 'Data Berhasil Disimpan');
+        } catch (ValidationException $e) {
+            throw new FilmException('Film data validation failed: ' . $e->getMessage());
+        }
     }
-
+    
 
     /**
      * Display the specified resource.
@@ -73,28 +94,41 @@ class FilmController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'judul_film' => 'required',
-            'waktu' => 'required',
-            'tanggal_pemesanan' => 'required',
-            'row_kursi' => 'required',
-            'seat_kursi' => 'required',
-            'jumlah_tiket' => 'required|integer',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'judul_film' => 'required',
+                'waktu' => 'required',
+                'tanggal_pemesanan' => 'required',
+                'row_kursi' => 'required',
+                'seat_kursi' => 'required',
+                'jumlah_tiket' => 'required|integer',
+            ]);
 
-        $film = Film::find($id);
-        $film->update($validatedData);
+            $film = Film::find($id);
+            $film->update($validatedData);
 
-        return redirect()->route('tiket.films')->with('success', 'Data Berhasil Diedit');
+            return redirect()->route('tiket.films')->with('success', 'Data Berhasil Diedit');
+        } catch (FilmException $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $data = Film::find($id);
-        $data->delete();
-        return redirect()->route('tiket.films')->with('success','Data Berhasil Dihapus');
+        try {
+            $data = Film::find($id);
+            if (!$data) {
+                throw new FilmException('Data not found.');
+            }
+
+            $data->delete();
+            return redirect()->route('tiket.films')->with('success', 'Data Berhasil Dihapus');
+        } catch (FilmException $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }
