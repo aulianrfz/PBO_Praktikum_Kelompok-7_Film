@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('judul_film');
             $table->time('waktu');
             $table->date('tanggal_pemesanan');
-            $table->char('row_kursi');
-            $table->char('seat_kursi');
+            $table->string('row_kursi');
+            $table->integer('seat_kursi');
             $table->integer('jumlah_tiket');
             $table->timestamps();
         });

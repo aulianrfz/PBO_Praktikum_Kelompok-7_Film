@@ -15,32 +15,65 @@
 
             <div class="form-group">
                 <label for="judul_film">Judul Film</label>
-                <input type="text" name="judul_film" class="form-control" id="judul_film" placeholder="Masukkan judul film" value = "{{ $data -> judul_film }}">
+                <input type="text" name="judul_film" class="form-control @error('judul_film') is-invalid @enderror" id="judul_film" placeholder="Masukkan judul film" value = "{{ $data -> judul_film }}">
+                @error('judul_film')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="waktu">Waktu</label>
-                <input type="time" name="waktu" class="form-control" id="waktu" placeholder="Masukkan waktu" value = "{{ $data -> waktu }}">
+                <input type="time" name="waktu" class="form-control @error('waktu') is-invalid @enderror" id="waktu" placeholder="Masukkan waktu" value = "{{ $data -> waktu }}">
+                @error('waktu')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="tanggal_pemesanan">Tanggal Pemesanan</label>
-                <input type="date" name="tanggal_pemesanan" class="form-control" id="tanggal_pemesanan" placeholder="Masukkan tanggal pemesanan" value = "{{ $data -> tanggal_pemesanan }}">
+                <input type="date" name="tanggal_pemesanan" class="form-control @error('tanggal_pemesanan') is-invalid @enderror" id="tanggal_pemesanan" placeholder="Masukkan tanggal pemesanan" value = "{{ $data -> tanggal_pemesanan }}">
+                @error('tanggal_pemesanan')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
-                <label for="row_kursi">Row Kursi</label>
-                <input type="text" name="row_kursi" class="form-control" id="row_kursi" placeholder="Masukkan row kursi" value = "{{ $data -> row_kursi }}">
+                <label for="row_kursi" class="form-label @error('row_kursi') is-invalid @enderror">Row Kursi</label>
+                <select class="form-select" name="row_kursi">
+                    <option value="{{ $data -> row_kursi }}">{{ $data -> row_kursi }}</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
+                    <option value="J">J</option>
+                    <option value="K">K</option>
+                    <option value="L">L</option>
+                </select>
+                @error('row_kursi')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <!-- <input type="text" name="row_kursi" class="form-control" id="row_kursi" placeholder="Masukkan row kursi" required> -->
             </div>
 
             <div class="form-group">
                 <label for="seat_kursi">Seat Kursi</label>
-                <input type="text" name="seat_kursi" class="form-control" id="seat_kursi" placeholder="Masukkan seat kursi" value = "{{ $data -> seat_kursi }}">
+                <input type="number" name="seat_kursi" class="form-control @error('seat_kursi') is-invalid @enderror" id="seat_kursi" placeholder="Masukkan seat kursi" value = "{{ $data -> seat_kursi }}">
+                @error('seat_kursi')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="jumlah_tiket">Jumlah Tiket</label>
-                <input type="number" name="jumlah_tiket" class="form-control" id="jumlah_tiket" placeholder="Masukkan jumlah tiket" value = "{{ $data -> jumlah_tiket }}">
+                <input type="number" name="jumlah_tiket" class="form-control @error('jumlah_tiket') is-invalid @enderror" id="jumlah_tiket" placeholder="Masukkan jumlah tiket" value = "{{ $data -> jumlah_tiket }}">
+                @error('jumlah_tiket')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
