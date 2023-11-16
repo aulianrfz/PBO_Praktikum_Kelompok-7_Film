@@ -1,19 +1,35 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Exceptions\FilmException; 
+
+use App\Exceptions\FilmException;
 use App\Models\Film;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 
 class FilmController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Film::all();
-        return view('page.admin.tiket.films',compact ('data'));
+        if ($request->ajax()) {
+            $data = Film::select('*');
+            return DataTables::of($data)
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('tiket.edit', $row->id) . '" class="btn btn-info">Edit</a>';
+                    $btn .= ' <form action="' . route('tiket.destroy', $row->id) . '" method="POST" style="display:inline;">
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                <button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                            </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('page.admin.tiket.films');
     }
 
     public function create()
@@ -29,9 +45,9 @@ class FilmController extends Controller
                 'waktu' => 'required',
                 'tanggal_pemesanan' => [
                     'required',
-                    'date', // Pastikan tanggal valid.
-                    'after_or_equal:' . Carbon::now()->format('Y-m-d'), // Setelah tanggal sekarang.
-                    'before_or_equal:' . Carbon::now()->addWeek()->format('Y-m-d'), // Sepekan ke depan.
+                    'date',
+                    'after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                    'before_or_equal:' . Carbon::now()->addWeek()->format('Y-m-d'),
                 ],
                 'row_kursi' => 'required',
                 'seat_kursi' => 'required|integer|between:1,10',
@@ -49,18 +65,16 @@ class FilmController extends Controller
             return redirect()->back()->withErrors($e->errors())->withInput();
         }
     }
-    
+
     public function show($id)
     {
         $data = Film::find($id);
         return view('editData', compact('data'));
- 
     }
 
     public function tampilkandata($id)
     {
         $data = Film::find($id);
-
         return view('page.admin.tiket.tampilfilm', compact('data'));
     }
 
@@ -78,9 +92,9 @@ class FilmController extends Controller
                 'waktu' => 'required',
                 'tanggal_pemesanan' => [
                     'required',
-                    'date', // Pastikan tanggal valid.
-                    'after_or_equal:' . Carbon::now()->format('Y-m-d'), // Setelah tanggal sekarang.
-                    'before_or_equal:' . Carbon::now()->addWeek()->format('Y-m-d'), // Sepekan ke depan.
+                    'date',
+                    'after_or_equal:' . Carbon::now()->format('Y-m-d'),
+                    'before_or_equal:' . Carbon::now()->addWeek()->format('Y-m-d'),
                 ],
                 'row_kursi' => 'required',
                 'seat_kursi' => 'required|integer|between:1,10',
@@ -107,10 +121,10 @@ class FilmController extends Controller
             }
 
             $data->delete();
-            Log::info('Film deleted successfully: ' . $film->judul_film);
-            return redirect()->route('tiket.films')->with('success', 'Data Berhasil Dihapus');
+            Log::info('Film deleted successfully: ' . $data->judul_film);
+            return response()->json(['success' => 'Data Berhasil Dihapus']);
         } catch (FilmException $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 }

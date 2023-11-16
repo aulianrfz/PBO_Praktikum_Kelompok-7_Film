@@ -1,62 +1,67 @@
+<!-- resources/views/page/admin/tiket/films.blade.php -->
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">    
-    <title >Tiket Bioskop</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <title>Pembelian Tiket Film Bioskop</title>
 </head>
-
 <body>
-    <h1 class="text-center mt-4 mb-4"> Pembelian Tiket Film Bioskop </h1>
-
     <div class="container">
-        <a href="{{ route('tiket.formfilm') }}" class="btn btn-success mb-3" >Tambah</a>
-        <div class="row">
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success" role="alert">
-                {{$message}}
-            </div>
-        @endif
-            <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Judul Film</th>
-                <th scope="col">Waktu</th>
-                <th scope="col">Tanggal Pemesanan</th>
-                <th scope="col">Row Kursi</th>
-                <th scope="col">Seat Kursi</th>
-                <th scope="col">Jumlah Tiket</th>
-              </tr>
-            </thead>
-            <tbody>
-            @php
-              $no = 1;
-            @endphp
-            @foreach ($data as $row)
-                <tr>
-                    <th scope="row">{{$no++}}</th>
-                    <td>{{$row->judul_film}}</td>
-                    <td>{{$row->waktu}}</td>
-                    <td>{{$row->tanggal_pemesanan}}</td>
-                    <td>{{$row->row_kursi}}</td>
-                    <td>{{$row->seat_kursi}}</td>
-                    <td>{{$row->jumlah_tiket}}</td>
-                    <td>
-                        <a href="{{ route('tiket.tampilkandata', ['id' => $row->id]) }}" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-danger delete" data-id="{{$row->id}}">Delete</a>
-                    </td>
-                </tr>
-            @endforeach              
-            </tbody>
-            </table>    
+        <h2 class="text-center mt-4 mb-4">Tiket Bioskop</h2>
+        <div class="container">
+            <a href="{{ route('tiket.formfilm') }}" class="btn btn-success mb-3" >Tambah</a>
+            <div class="row">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success" role="alert">
+                    {{$message}}
+                </div>
+            @endif
+            <table id="filmsTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Judul Film</th>
+                        <th>Waktu</th>
+                        <th>Tanggal Pemesanan</th>
+                        <th>Row Kursi</th>
+                        <th>Seat Kursi</th>
+                        <th>Jumlah Tiket</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+          </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <footer style="text-align: center">
+        <p>© 2023 Pembelian Tiket Film Bioskop.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#filmsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('tiket.films') }}",
+                columns: [
+                    { data: 'judul_film', name: 'judul_film' },
+                    { data: 'waktu', name: 'waktu' },
+                    { data: 'tanggal_pemesanan', name: 'tanggal_pemesanan' },
+                    { data: 'row_kursi', name: 'row_kursi' },
+                    { data: 'seat_kursi', name: 'seat_kursi' },
+                    { data: 'jumlah_tiket', name: 'jumlah_tiket' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ]
+            });
+        });
+    </script>
 </body>
 <script>
 
