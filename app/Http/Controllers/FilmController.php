@@ -19,16 +19,12 @@ class FilmController extends Controller
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' . route('tiket.edit', $row->id) . '" class="btn btn-info">Edit</a>';
-                    $btn .= ' <form action="' . route('tiket.destroy', $row->id) . '" method="POST" style="display:inline;">
-                                ' . csrf_field() . '
-                                ' . method_field('DELETE') . '
-                                <button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                            </form>';
+                    $btn .= ' <button class="btn btn-danger delete" data-id="' . $row->id . '">Delete</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-        }
+        }     
         return view('page.admin.tiket.films');
     }
 
@@ -69,7 +65,7 @@ class FilmController extends Controller
     public function show($id)
     {
         $data = Film::find($id);
-        return view('editData', compact('data'));
+        return view('page.admin.tiket.tampilfilm', compact('data'));
     }
 
     public function tampilkandata($id)
@@ -81,7 +77,7 @@ class FilmController extends Controller
     public function edit($id)
     {
         $data = Film::find($id);
-        return view('editData', compact('data'));
+        return view('page.admin.tiket.tampilfilm', compact('data'));
     }
 
     public function update(Request $request, $id)
@@ -122,9 +118,12 @@ class FilmController extends Controller
 
             $data->delete();
             Log::info('Film deleted successfully: ' . $data->judul_film);
+
             return response()->json(['success' => 'Data Berhasil Dihapus']);
         } catch (FilmException $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+
 }

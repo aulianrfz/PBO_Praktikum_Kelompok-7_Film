@@ -39,6 +39,23 @@ $links = [
                 "section_href" => route('tiket.films')
             ]
         ]
+    ],
+    [
+        "text" => "Pembayaran",
+        "icon" => "fas fa-money",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Pembayaran Tiket",
+                "section_icon" => "far fa-money",
+                "section_href" => route('pembelians.create')
+            ],
+            [
+                "section_text" => "Histori Pembelian",
+                "section_icon" => "far fa-clock",
+                "section_href" => route('pembelians.index')
+            ]
+        ]
     ]
 ];
 $navigation_links = json_decode(json_encode($links));

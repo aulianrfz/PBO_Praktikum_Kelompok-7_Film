@@ -16,5 +16,6 @@ class Film extends Model
         'row_kursi',
         'seat_kursi',
         'jumlah_tiket',
+        'harga',
     ];
 }

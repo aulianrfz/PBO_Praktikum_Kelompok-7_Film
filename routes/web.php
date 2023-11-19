@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\PembelianController;
+
 
 
 /*
@@ -54,6 +56,19 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::get('/film/{id}/edit', [FilmController::class, 'edit'])->name('edit');
             Route::post('/update/{id}', [FilmController::class, 'update'])->name('update');
             Route::get('/tampilkandata/{id}',[FilmController::class, 'tampilkandata'])->name('tampilkandata');
-            Route::get('/destroy/{id}', [FilmController::class, 'destroy'])->name('destroy');
+            Route::delete('destroy/{id}', [FilmController::class, 'destroy'])->name('destroy');
         });
+
+
+Route::prefix('dashboard/admin/pembelians')->name('pembelians.')->group(function () {
+    Route::get('/', [PembelianController::class, 'index'])->name('index');
+    Route::get('/create', [PembelianController::class, 'create'])->name('create');
+    Route::post('/store', [PembelianController::class, 'store'])->name('store');
+    Route::get('/show/{id}', [PembelianController::class, 'showPembelian'])->name('show'); 
+    Route::get('/edit/{id}', [PembelianController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [PembelianController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [PembelianController::class, 'destroy'])->name('destroy');
+});
+
+
 });

@@ -1,3 +1,4 @@
+@include('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,19 @@
 
             <div class="form-group">
                 <label for="judul_film">Judul Film</label>
-                <input type="text" name="judul_film" class="form-control @error('judul_film') is-invalid @enderror" id="judul_film" placeholder="Masukkan judul film">
+                <select class="form-select" name="judul_film" placeholder="Masukkan judul film kursi">
+                    <option value=""></option>
+                    <option value="Narnia">Narnia</option>
+                    <option value="Jumanji">Jumanji</option>
+                    <option value="Marvel">Marvel</option>
+                    <option value="Openheimer">Openheimer</option>
+                    <option value="Train To Busan">Train To Busan</option>
+                    <option value="Kingdom">Kingdom</option>
+                    <option value="Petualangan Sherina">Petualangan Sherina</option>
+                    <option value="Habibi Ainun">Habibi Ainun</option>
+                    <option value="Dibalik Lindungan Ka'bah">Dibalik Lindungan Ka'bah</option>
+                    <option value="Titanic">Titanic</option>
+                </select>
                 @error('judul_film')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -78,7 +91,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary">Lanjut Pembayaran</button>
         </form>
     </div>
 

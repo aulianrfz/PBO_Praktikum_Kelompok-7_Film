@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('row_kursi');
             $table->integer('seat_kursi');
             $table->integer('jumlah_tiket');
+            $table->decimal('harga', 10, 2)->default(50000); 
             $table->timestamps();
         });
     }
