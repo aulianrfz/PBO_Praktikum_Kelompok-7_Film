@@ -33,7 +33,6 @@
                             <th>Tanggal Pemesanan</th>
                             <th>Row Kursi</th>
                             <th>Seat Kursi</th>
-                            <th>Jumlah Tiket</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,10 +40,6 @@
             </div>
         </div>
     </div>
-
-    <footer style="text-align: center">
-        <p>© 2023 Pembelian Tiket Film Bioskop.</p>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -63,7 +58,6 @@
                 { data: 'tanggal_pemesanan', name: 'tanggal_pemesanan' },
                 { data: 'row_kursi', name: 'row_kursi' },
                 { data: 'seat_kursi', name: 'seat_kursi' },
-                { data: 'jumlah_tiket', name: 'jumlah_tiket' },
                 {
                     data: 'action',
                     name: 'action',

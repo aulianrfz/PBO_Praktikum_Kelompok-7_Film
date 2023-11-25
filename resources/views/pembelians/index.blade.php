@@ -1,63 +1,108 @@
-<!-- resources/views/pembelians/index.blade.php -->
+<!-- resources/views/page/admin/tiket/films.blade.php -->
 
-@extends('layouts.app')
+@include('layouts.app')
 
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <title>Pembelian Tiket Film Bioskop</title>
+</head>
+
+<body>
     <div class="container">
-        <h2 class="text-center mt-4 mb-4">Data Pembelian Tiket</h2>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                {{ $message }}
+        <h2 class="text-center mt-4 mb-4">Tiket Bioskop</h2>
+        <div class="container">
+            <a href="{{ route('pembelians.create') }}" class="btn btn-success mb-3">Tambah</a>
+            <div class="row">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+                <table id="filmsTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Judul Film</th>
+                            <th>Jumlah Tiket</th>
+                            <th>Pembayaran</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
-        @endif
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Film</th>
-                    <th>Jumlah Tiket</th>
-                    <th>Total Harga</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pembelians as $pembelian)
-                    <tr id="pembelian_{{ $pembelian->id }}">
-                        <td>{{ $pembelian->id }}</td>
-                        <td>{{ $pembelian->film->judul_film }}</td>
-                        <td>{{ $pembelian->jumlah_tiket }}</td>
-                        <td>{{ $pembelian->total_harga }}</td>
-                        <td>
-                            <a href="{{ route('pembelians.edit', $pembelian->id) }}" class="btn btn-primary">Edit</a>
-                            <button class="btn btn-danger" onclick="deletePembelian({{ $pembelian->id }})">Delete</button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        </div>
     </div>
 
-    <script>
-        function deletePembelian(id) {
-            // Make an AJAX request to delete the record
-            fetch('{{ url('dashboard/admin/pembelians/delete') }}/' + id, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response, you can remove the row or show a success message
-                console.log(data);
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    ...
 
-                // Remove the row from the table
-                document.getElementById('pembelian_' + id).remove();
-            })
-            .catch(error => {
-                // Handle errors
-                console.error('Error:', error);
+<script>
+    $(document).ready(function() {
+        var table = $('#filmsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('pembelians.index') }}",
+            columns: [
+                { data: 'film_id', name: 'judul_film' },
+                { data: 'jumlah_tiket', name: 'row_kursi' },
+                { data: 'total_harga', name: 'Harga' },
+
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center',
+                },
+            ],
+        });
+
+        $('#filmsTable').on('click', '.delete', function() {
+            var filmId = $(this).data('id');
+            Swal.fire({
+                title: 'Peringatan!',
+                text: "Apakah kamu yakin data film dengan ID " + filmId + " ini mau dihapus?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/dashboard/admin/tiket/destroy/" + filmId,
+                        type: "DELETE",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": filmId // Pass the id parameter
+                        },
+                        success: function (data) {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Data berhasil terhapus.',
+                                'success'
+                            );
+                            // Perbarui tabel setelah penghapusan
+                            table.ajax.reload();
+                        },
+                        error: function (data) {
+                            console.error('Error:', data);
+                        }
+                    });
+                }
             });
-        }
-    </script>
-@endsection
+        });
+    });
+</script>
+</body>

@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,8 +20,8 @@ return new class extends Migration
             $table->date('tanggal_pemesanan');
             $table->string('row_kursi');
             $table->integer('seat_kursi');
-            $table->integer('jumlah_tiket');
-            $table->decimal('harga', 10, 2)->default(50000); 
+            $table->integer('jumlah_tiket'| 'min:1');
+            $table->integer('harga', 10, 2)->default(50000); 
             $table->timestamps();
         });
     }
@@ -33,4 +33,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('films');
     }
-};
+}; 

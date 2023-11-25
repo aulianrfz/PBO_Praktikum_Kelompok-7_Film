@@ -60,15 +60,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         });
 
 
-Route::prefix('dashboard/admin/pembelians')->name('pembelians.')->group(function () {
-    Route::get('/', [PembelianController::class, 'index'])->name('index');
-    Route::get('/create', [PembelianController::class, 'create'])->name('create');
-    Route::post('/store', [PembelianController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [PembelianController::class, 'showPembelian'])->name('show'); 
-    Route::get('/edit/{id}', [PembelianController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [PembelianController::class, 'update'])->name('update');
-    Route::delete('/delete/{id}', [PembelianController::class, 'destroy'])->name('destroy');
-});
-
+    Route::controller(PembelianController::class)
+        ->prefix('pembelians')
+        ->as('pembelians.')
+        ->group(function () {
+            Route::get('/index', [PembelianController   ::class, 'index'])->name('index');
+            Route::get('/create', [PembelianController::class, 'create'])->name('create');
+            Route::post('/store', [PembelianController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [PembelianController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [PembelianController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [PembelianController::class, 'destroy'])->name('destroy');
+        });
 
 });

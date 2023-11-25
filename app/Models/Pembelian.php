@@ -6,27 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 class Pembelian extends Model
 {
-    use HasFactory;
+    protected $fillable = ['film_id', 'jumlah_tiket', 'total_harga', 'user_id'];
 
-    protected $fillable = [
-        'user_id',
-        'nama_pemesan',
-        'jumlah_tiket',
-        'harga',
-        'total_harga',
-    ];
-    public static function boot()
+    public function film()
     {
-        parent::boot();
-
-        self::creating(function ($film) {
-            $film->harga = $film->harga ?? 50000; 
-        });
+        return $this->belongsTo(Film::class);
     }
-    
-    public function user(): BelongsTo
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
