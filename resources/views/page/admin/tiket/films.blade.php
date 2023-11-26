@@ -1,53 +1,79 @@
-<!-- resources/views/page/admin/tiket/films.blade.php -->
+@extends('layouts.base_admin.base_dashboard')@section('judul', 'List Akun')
+@section('script_head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endsection
 
-@include('layouts.app')
+@section('content')
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Data </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item active">Akun</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <title>Pembelian Tiket Film Bioskop</title>
-</head>
-
-<body>
-    <div class="container">
-        <h2 class="text-center mt-4 mb-4">Tiket Bioskop</h2>
-        <div class="container">
-            <a href="{{ route('tiket.formfilm') }}" class="btn btn-success mb-3">Tambah</a>
-            <div class="row">
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ $message }}
-                    </div>
-                @endif
-                <table id="filmsTable" class="table">
-                    <thead>
-                        <tr>
-                            <th>Judul Film</th>
-                            <th>Waktu</th>
-                            <th>Tanggal Pemesanan</th>
-                            <th>Row Kursi</th>
-                            <th>Seat Kursi</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"></h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0" style="margin: 20px">
+            <table id="filmsTable" class="table table-striped table-bordered display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Judul Film</th>
+                        <th>Waktu</th>
+                        <th>Tanggal Pemesanan</th>
+                        <th>Row Kursi</th>
+                        <th>Seat Kursi</th>
+                        <th>Jumlah Tiket</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <div class="col-sm-11.5">
+        <div class="d-flex justify-content-between mb-2">
+            <div class="col-sm-1">
+                <a href ="/dashboard/admin/tiket/formfilm" type="button" class="btn btn-success btn-sm" style="width=auto">Tambah</a>
+            </div>
+            <div class="col-sm-1.5">
+                <a href="/create-word-document" type="button" class="btn btn-info btn-sm">Download</a>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    ...
-
+</section>
+@endsection @section('script_footer')
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var table = $('#filmsTable').DataTable({
             processing: true,
             serverSide: true,
@@ -58,6 +84,7 @@
                 { data: 'tanggal_pemesanan', name: 'tanggal_pemesanan' },
                 { data: 'row_kursi', name: 'row_kursi' },
                 { data: 'seat_kursi', name: 'seat_kursi' },
+                { data: 'jumlah_tiket', name: 'jumlah_tiket' },
                 {
                     data: 'action',
                     name: 'action',
@@ -66,45 +93,74 @@
                     className: 'text-center',
                 },
             ],
+            language: {
+                "decimal": "",
+                "emptyTable": "Tak ada data yang tersedia pada tabel ini",
+                "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+                "infoFiltered": "(difilter dari _MAX_ total entri)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Tampilkan _MENU_ entri",
+                "loadingRecords": "Loading...",
+                "processing": "Sedang Mengambil Data...",
+                "search": "Pencarian:",
+                "zeroRecords": "Tidak ada data yang cocok ditemukan",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                },
+                "aria": {
+                    "sortAscending": ": aktifkan untuk mengurutkan kolom ascending",
+                    "sortDescending": ": aktifkan untuk mengurutkan kolom descending"
+                }
+            }
+
         });
 
-        $('#filmsTable').on('click', '.delete', function() {
+        // hapus data
+        $('#filmsTable').on('click', '.delete', function () {
             var filmId = $(this).data('id');
-            Swal.fire({
-                title: 'Peringatan!',
-                text: "Apakah kamu yakin data film dengan ID " + filmId + " ini mau dihapus?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, hapus!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "/dashboard/admin/tiket/destroy/" + filmId,
-                        type: "DELETE",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": filmId // Pass the id parameter
-                        },
-                        success: function (data) {
-                            Swal.fire(
-                                'Terhapus!',
-                                'Data berhasil terhapus.',
-                                'success'
-                            );
-                            // Perbarui tabel setelah penghapusan
-                            table.ajax.reload();
-                        },
-                        error: function (data) {
-                            console.error('Error:', data);
-                        }
-                    });
-                }
-            });
+            // var url = $(this).data("url");
+            Swal
+                .fire({
+                    title: 'Apa kamu yakin?',
+                    text: "Kamu tidak akan dapat mengembalikan ini!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        // console.log();
+                        $.ajax({
+                            url: "/dashboard/admin/tiket/destroy/" + filmId,
+                            type: 'DELETE',
+                            data: {
+                                "id": filmId,
+                                "_token": "{{csrf_token()}}"
+                            },
+                            success: function (data) {
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Data berhasil terhapus.',
+                                    'success'
+                                );
+                                // Perbarui tabel setelah penghapusan
+                                table.ajax.reload();
+                            },
+                            error: function (data) {
+                                console.error('Error:', data);
+                            }
+                        });
+                    }
+                })
         });
     });
 </script>
-</body>
-
-</html>
+@endsection

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\WordController;
 
 
 
@@ -73,3 +74,5 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         });
 
 });
+
+Route::get('/create-word-document', [WordController::class, 'createWordDocument']);
