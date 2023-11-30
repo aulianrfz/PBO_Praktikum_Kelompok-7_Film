@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePembeliansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('film_id');
             $table->foreign('film_id')->references('id')->on('films')->onDelete('cascade');
-            $table->integer('jumlah_tiket');
+            $table->integer('jumlah_tiket')->min(1);
+            $table->decimal('harga', 10, 2)->default(50000);
             $table->decimal('total_harga');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -34,4 +35,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('pembelians');
     }
-};
+}

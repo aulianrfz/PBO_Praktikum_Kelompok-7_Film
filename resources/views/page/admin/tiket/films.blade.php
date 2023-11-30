@@ -47,7 +47,6 @@
                         <th>Tanggal Pemesanan</th>
                         <th>Row Kursi</th>
                         <th>Seat Kursi</th>
-                        <th>Jumlah Tiket</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -84,7 +83,6 @@
                 { data: 'tanggal_pemesanan', name: 'tanggal_pemesanan' },
                 { data: 'row_kursi', name: 'row_kursi' },
                 { data: 'seat_kursi', name: 'seat_kursi' },
-                { data: 'jumlah_tiket', name: 'jumlah_tiket' },
                 {
                     data: 'action',
                     name: 'action',

@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pembelian extends Model
 {
-    protected $fillable = ['film_id', 'jumlah_tiket', 'total_harga', 'user_id'];
+    // Pembelian.php (model)
+// Pembelian.php (model)
+    protected $fillable = ['film_id', 'jumlah_tiket', 'total_harga', 'harga', 'user_id'];
+
 
     public function film()
     {

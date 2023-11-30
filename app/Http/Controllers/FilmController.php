@@ -47,7 +47,6 @@ class FilmController extends Controller
                 ],
                 'row_kursi' => 'required',
                 'seat_kursi' => 'required|integer|between:1,10',
-                'jumlah_tiket' => 'required|integer|max:1',
             ]);
 
             $film = new Film($validatedData);
@@ -94,7 +93,6 @@ class FilmController extends Controller
                 ],
                 'row_kursi' => 'required',
                 'seat_kursi' => 'required|integer|between:1,10',
-                'jumlah_tiket' => 'required|integer|max:1',
             ]);
 
             $film = Film::find($id);

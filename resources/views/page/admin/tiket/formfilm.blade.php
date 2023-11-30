@@ -113,16 +113,6 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="jumlah_tiket">Jumlah Tiket</label>
-                    <input type="number" name="jumlah_tiket"
-                        class="form-control @error('jumlah_tiket') is-invalid @enderror" id="jumlah_tiket"
-                        placeholder="Masukkan jumlah tiket">
-                    @error('jumlah_tiket')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <div class="col-sm-11.5 mt-4 mb-4">
                     <div class="d-flex justify-content-between mb-2">
                         <div class="col-sm-1.5 ml-auto">
