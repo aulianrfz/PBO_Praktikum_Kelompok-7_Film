@@ -40,32 +40,22 @@
 
         </div>
         <div class="container">
-            <form action="{{ route('tiket.update', ['id' => $data->id]) }}" method="POST" enctype="multipart/form-data" onsubmit="">
+            <form action="{{ route('tiket.store') }}" method="POST">
                 @csrf
+
                 <div class="form-group mt-4">
                     <label for="judul_film">Judul Film</label>
-                    <select class="form-select" name="judul_film" placeholder="Masukkan judul film kursi">
-                        <option value="{{ $data -> judul_film }}">{{ $data -> judul_film }}</option>
-                        <option value="Narnia">Narnia</option>
-                        <option value="Jumanji">Jumanji</option>
-                        <option value="Marvel">Marvel</option>
-                        <option value="Openheimer">Openheimer</option>
-                        <option value="Train To Busan">Train To Busan</option>
-                        <option value="Kingdom">Kingdom</option>
-                        <option value="Petualangan Sherina">Petualangan Sherina</option>
-                        <option value="Habibi Ainun">Habibi Ainun</option>
-                        <option value="Dibalik Lindungan Ka'bah">Dibalik Lindungan Ka'bah</option>
-                        <option value="Titanic">Titanic</option>
+                    <select class="form-select" name="judul_film" placeholder="Masukkan judul tiket kursi">
+                    @foreach ($data as $film)
+                        <option value="{{ $film->id }}">{{ $film->judulFilm }}</option>
+                    @endforeach
                     </select>
-                    @error('judul_film')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="waktu">Waktu</label>
                     <input type="time" name="waktu" class="form-control @error('waktu') is-invalid @enderror" id="waktu"
-                        placeholder="Masukkan waktu" value = "{{ $data -> waktu }}">
+                        placeholder="Masukkan waktu">
                     @error('waktu')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -75,7 +65,7 @@
                     <label for="tanggal_pemesanan">Tanggal Pemesanan</label>
                     <input type="date" name="tanggal_pemesanan"
                         class="form-control @error('tanggal_pemesanan') is-invalid @enderror" id="tanggal_pemesanan"
-                        placeholder="Masukkan tanggal pemesanan" value = "{{ $data -> tanggal_pemesanan }}">
+                        placeholder="Masukkan tanggal pemesanan">
                     @error('tanggal_pemesanan')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -84,7 +74,7 @@
                 <div class="form-group">
                     <label for="row_kursi" class="form-label @error('row_kursi') is-invalid @enderror">Row Kursi</label>
                     <select class="form-select" name="row_kursi" placeholder="Masukkan row kursi">
-                        <option  value="{{ $data -> row_kursi }}">{{ $data -> row_kursi }}</option>
+                        <option value=""></option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
@@ -107,11 +97,12 @@
                     <label for="seat_kursi">Seat Kursi</label>
                     <input type="number" name="seat_kursi"
                         class="form-control @error('seat_kursi') is-invalid @enderror" id="seat_kursi"
-                        placeholder="Masukkan seat kursi" value = "{{ $data -> seat_kursi }}">
+                        placeholder="Masukkan seat kursi">
                     @error('seat_kursi')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
 
                 <div class="col-sm-11.5 mt-4 mb-4">
                     <div class="d-flex justify-content-between mb-2">

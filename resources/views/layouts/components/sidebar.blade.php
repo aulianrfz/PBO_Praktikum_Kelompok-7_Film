@@ -24,6 +24,23 @@ $links = [
         ]
     ],
     [
+        "text" => "Film",
+        "icon" => "fas fa-ticket",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Tambah Film",
+                "section_icon" => "far fa-money",
+                "section_href" => route('film.formfilm')
+            ],
+            [
+                "section_text" => "Histori Film",
+                "section_icon" => "far fa-clock",
+                "section_href" => route('film.films')
+            ]
+        ]
+    ],
+    [
         "text" => "Tiket",
         "icon" => "fas fa-ticket",
         "is_multi" => true,
@@ -31,12 +48,12 @@ $links = [
             [
                 "section_text" => "Pembelian Tiket",
                 "section_icon" => "far fa-money",
-                "section_href" => route('tiket.formfilm')
+                "section_href" => route('tiket.formtiket')
             ],
             [
                 "section_text" => "Histori Pembelian",
                 "section_icon" => "far fa-clock",
-                "section_href" => route('tiket.films')
+                "section_href" => route('tiket.tikets')
             ]
         ]
     ],

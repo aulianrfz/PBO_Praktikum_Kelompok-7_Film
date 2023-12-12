@@ -7,14 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
+    protected $guarded = [];
+    
     use HasFactory;
-
-    protected $fillable = [
-        'judul_film',
-        'waktu',
-        'tanggal_pemesanan',
-        'row_kursi',
-        'harga',
-        'seat_kursi',
-    ];
 }

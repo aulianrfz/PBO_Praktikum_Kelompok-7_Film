@@ -16,39 +16,8 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                @if (Auth::user()->user_image)
-                <img
-                    src="{{ Auth::user()->user_image }}"
-                    class="user-image img-circle elevation-2"
-                    alt="User Imagess">
-                @else
-                <img
-                    src="{{ asset('vendor/adminlte3/img/user2-160x160.jpg') }}"
-                    class="user-image img-circle elevation-2"
-                    alt="User Imagess">
-                    @endif
-                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <!-- User image -->
-                    <li class="user-header bg-primary">
-                        @if (Auth::user()->user_image)
-                        <img
-                        src="{{ Auth::user()->user_image }}"
-                        class="img-circle elevation-2"
-                        alt="User Imagess">
-                        @else
-                        <img
-                            src="{{ asset('vendor/adminlte3/img/user2-160x160.jpg') }}"
-                            class="img-circle elevation-2"
-                            alt="User Imagess">
-                            @endif
-
-                            <p>
-                                {{ Auth::user()->name }}
-                                <small>Bergabung pada @DateIndo(Auth::user()->created_at)</small>
-                            </p>
-                        </li>
+                    
                         <!-- Menu Body -- <li class="user-body"> <div class="row"> <div class="col-4
                         text-center"> <a href="#">Followers</a> </div> <div class="col-4 text-center">
                         <a href="#">Sales</a> </div> <div class="col-4 text-center"> <a

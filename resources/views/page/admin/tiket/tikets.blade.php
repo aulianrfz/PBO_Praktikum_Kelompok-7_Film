@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data </h1>
+                <h1>Data Pembayaran </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="card-body p-0" style="margin: 20px">
-            <table id="filmsTable" class="table table-striped table-bordered display" style="width:100%">
+            <table id="tiketsTable" class="table table-striped table-bordered display" style="width:100%">
                 <thead>
                     <tr>
                         <th>Judul Film</th>
@@ -59,7 +59,7 @@
     <div class="col-sm-11.5">
         <div class="d-flex justify-content-between mb-2">
             <div class="col-sm-1">
-                <a href ="/dashboard/admin/tiket/formfilm" type="button" class="btn btn-success btn-sm" style="width=auto">Tambah</a>
+                <a href ="/dashboard/admin/tiket/formtiket" type="button" class="btn btn-success btn-sm" style="width=auto">Tambah</a>
             </div>
             <div class="col-sm-1.5">
                 <a href="/create-word-document" type="button" class="btn btn-info btn-sm">Download</a>
@@ -73,10 +73,10 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function () {
-        var table = $('#filmsTable').DataTable({
+        var table = $('#tiketsTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tiket.films') }}",
+            ajax: "{{ route('tiket.tikets') }}",
             columns: [
                 { data: 'judul_film', name: 'judul_film' },
                 { data: 'waktu', name: 'waktu' },
@@ -119,8 +119,8 @@
         });
 
         // hapus data
-        $('#filmsTable').on('click', '.delete', function () {
-            var filmId = $(this).data('id');
+        $('#tiketsTable').on('click', '.delete', function () {
+            var tiketId = $(this).data('id');
             // var url = $(this).data("url");
             Swal
                 .fire({
@@ -137,10 +137,10 @@
                     if (result.isConfirmed) {
                         // console.log();
                         $.ajax({
-                            url: "/dashboard/admin/tiket/destroy/" + filmId,
+                            url: "/dashboard/admin/tiket/destroy/" + tiketId,
                             type: 'DELETE',
                             data: {
-                                "id": filmId,
+                                "id": tiketId,
                                 "_token": "{{csrf_token()}}"
                             },
                             success: function (data) {

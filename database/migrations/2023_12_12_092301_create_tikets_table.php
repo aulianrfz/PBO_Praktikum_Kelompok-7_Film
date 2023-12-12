@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('films', function (Blueprint $table) {
+        Schema::create('tikets', function (Blueprint $table) {
             $table->id();
-            $table->string('judul_film');
             $table->time('waktu');
             $table->date('tanggal_pemesanan');
             $table->string('row_kursi');
             $table->integer('seat_kursi');
+            $table->decimal('harga', 10, 2)->default(50000); 
+            $table->foreignId('film_id')->references('id')->on('films')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('films');
+        Schema::dropIfExists('tikets');
     }
 }; 
