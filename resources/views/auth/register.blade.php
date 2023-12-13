@@ -1,132 +1,109 @@
-@extends('layouts.base_admin.base_auth')@section('judul', 'Halaman Registrasi') @section('content')
-<div class="register-box">
-    <div class="register-logo">
-        <a href="#">
-            <b>Admin</b>LTE</a>
-    </div>
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en" dir="ltr">
 
-    <div class="card">
-        <div class="card-body register-card-body">
-            <p class="login-box-msg">Registrasi Akun Baru</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | Cravitae</title>
+    <link rel="stylesheet" href="/cssfile/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
 
-            <form action="{{ route('register') }}" method="post">
-                @csrf
-                <div class="input-group mb-3">
-                    <input
-                        id="name"
-                        type="text"
-                        placeholder="Nama Lengkap"
-                        class="form-control @error('name') is-invalid @enderror"
-                        name="name"
-                        value="{{ old('name') }}"
-                        required="required"
-                        autocomplete="name"
-                        autofocus="autofocus">
-                    {{-- <input type="text" class="form-control"> --}}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-user"></span>
-                        </div>
-                    </div>
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="input-group mb-3">
-                    <input
-                        id="email"
-                        placeholder="Email"
-                        type="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        name="email"
-                        value="{{ old('email') }}"
-                        required="required"
-                        autocomplete="email">
-                    {{-- <input type="email" class="form-control" > --}}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="input-group mb-3">
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Kata Sandi"
-                        class="form-control @error('password') is-invalid @enderror"
-                        name="password"
-                        required="required"
-                        autocomplete="new-password">
-                    {{-- <input type="password" class="form-control" > --}}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="input-group mb-3">
-                    <input
-                        placeholder="Ketik ulang kata sandi"
-                        id="password-confirm"
-                        type="password"
-                        class="form-control"
-                        name="password_confirmation"
-                        required="required"
-                        autocomplete="new-password">
-                    {{-- <input type="password" class="form-control" > --}}
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        {{-- <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                <label for="agreeTerms">
-                 I agree to the <a href="#">terms</a>
-                </label>
-              </div> --}}
-               Sudah punya akun? <a href="{{ route('login') }}" class="text-center">Login</a>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Registrasi</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-
-            {{-- <div class="social-auth-links text-center">
-                <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-primary">
-                    <i class="fab fa-facebook mr-2"></i>
-                    Sign up using Facebook
-                </a>
-                <a href="#" class="btn btn-block btn-danger">
-                    <i class="fab fa-google-plus mr-2"></i>
-                    Sign up using Google+
-                </a> --}}
+<body>
+    <div class="wrapper">
+        <h2>Registration</h2>
+        <form method="POST" action="#" enctype="multipart/form-data" onsubmit="return validateForm()">
+            @csrf
+            <div class="input-box">
+                <input type="text" name="name" placeholder="Enter your name" required>
+                <div id="name-error" class="error-message"></div>
             </div>
-
-
-        </div>
-        <!-- /.form-box -->
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Enter your email" required>
+                <div id="email-error" class="error-message"></div>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Create password" required>
+                <div id="password-error" class="error-message"></div>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password_confirmation" placeholder="Confirm password" required>
+                <div id="confirm-password-error" class="error-message"></div>
+            </div>
+            <div class="policy">
+                <input type="checkbox">
+                <h3>I accept all terms & condition</h3>
+            </div>
+            <div class="input-box button">
+                <input type="submit" value="Register Now">
+            </div>
+            <div class="text">
+                <h3>Already have an account? <a href="/login">Login now</a></h3>
+            </div>
+        </form>
     </div>
-    <!-- /.card -->
-</div>
-@endsection
+
+    <script>
+        function validateForm() {
+            var name = document.getElementsByName("name")[0].value;
+            var email = document.getElementsByName("email")[0].value;
+            var password = document.getElementsByName("password")[0].value;
+            var confirmPassword = document.getElementsByName("password_confirmation")[0].value;
+
+            // Clear previous error messages
+            document.getElementById('name-error').innerHTML = '';
+            document.getElementById('email-error').innerHTML = '';
+            document.getElementById('password-error').innerHTML = '';
+            document.getElementById('confirm-password-error').innerHTML = '';
+
+            if (name.length < 3) {
+                showAlert('Name must be at least 3 characters.', 'name-error');
+                return false;
+            }
+
+            if (email.length < 3 || !isValidEmail(email)) {
+                showAlert('Enter a valid email address.', 'email-error');
+                return false;
+            }
+
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters.', 'password-error');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert('Password confirmation does not match.', 'confirm-password-error');
+                return false;
+            }
+
+            return true;
+        }
+
+        function showAlert(message, errorDivId) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Form Validation Failed!',
+                text: message,
+                confirmButtonText: 'OK'
+            });
+            document.getElementById(errorDivId).innerHTML = message;
+        }
+
+        function isValidEmail(email) {
+            // A more permissive email validation regex
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>    
+</body>
+
+</html>
+

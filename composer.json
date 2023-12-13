@@ -1,28 +1,25 @@
 {
-    "name": "afrizalmy/laravel9-adminlte",
+    "name": "laravel/laravel",
     "type": "project",
-    "description": "Laravel Admin Starter project dengan AdminLTE v3.",
-    "keywords": ["framework", "laravel","adminlte"],
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
-        "afrizalmy/laraindo": "^1.0",
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.2",
-        "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7",
-        "laravel/ui": "^3.4",
-        "opcodesio/log-viewer": "^3.1",
-        "phpoffice/phpword": "^1.1",
-        "yajra/laravel-datatables-oracle": "^10.11"
+        "laravel/framework": "^10.10",
+        "laravel/sanctum": "^3.3",
+        "laravel/tinker": "^2.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "nunomaduro/collision": "^7.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -48,21 +45,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "php artisan storage:link",
-            "composer clear-all"
-        ],
-        "clear-all": [
-            "@php artisan optimize:clear",
-            "composer dumpautoload -o"
-        ],
-        "cache-all": [
-            "@php artisan config:cache",
-            "@php artisan route:cache"
-        ],
-        "cc": [
-            "composer clear-all",
-            "composer cache-all"
+            "@php artisan key:generate --ansi"
         ]
     },
     "extra": {
@@ -73,8 +56,12 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
