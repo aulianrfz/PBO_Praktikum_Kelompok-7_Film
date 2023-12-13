@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\ExcelController;
@@ -83,16 +84,18 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         });
 
 
-    Route::controller(PembelianController::class)
-        ->prefix('pembelians')
-        ->as('pembelians.')
+    Route::controller(PembayaranController::class)
+        ->prefix('pembayaran')
+        ->as('pembayaran.')
         ->group(function () {
-            Route::get('/index', [PembelianController::class, 'index'])->name('index');
-            Route::get('/create', [PembelianController::class, 'create'])->name('create');
-            Route::post('/store', [PembelianController::class, 'store'])->name('store');
-            Route::get('/edit/{id}', [PembelianController::class, 'edit'])->name('edit');
-            Route::post('/update/{id}', [PembelianController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}', [PembelianController::class, 'destroy'])->name('destroy');
+            Route::get('/pembayarans', [PembayaranController::class, 'index'])->name('pembayarans');
+            Route::get('/formpembayaran', [PembayaranController::class, 'create'])->name('formpembayaran');
+            Route::post('/store', [PembayaranController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [PembayaranController::class, 'show'])->name('show');
+            Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [TiketController::class, 'update'])->name('update');
+            Route::get('/tampilkandata/{id}', [TiketController::class, 'tampilkandata'])->name('tampilkandata');
+            Route::delete('destroy/{id}', [TiketController::class, 'destroy'])->name('destroy');
         });
 
 });
@@ -111,24 +114,18 @@ Route::controller(FilmController::class)
         Route::get('/dashboard', [FilmController::class, 'showdashboard'])->name('showdashboard');
         Route::get('/profil/{id}', [FilmController::class, 'showprofil'])->name('showprofil');
     });
+;
 
-Route::group(['prefix' => 'dashboard/admin'], function () {
+
+Route::group(['prefix' => 'dashboard/user'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::group(['prefix' => 'profile'], function () {
-        Route::get('/', [HomeController::class, 'profile'])->name('profile');
-        Route::post('update', [HomeController::class, 'updateprofile'])->name('profile.update');
-    });
-
-    Route::controller(AkunController::class)
-        ->prefix('akun')
-        ->as('akun.')
+    Route::controller(FilmController::class)
+        ->prefix('tampilan')
+        ->as('tampilan.')
         ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('showdata', 'dataTable')->name('dataTable');
-            Route::match(['get', 'post'], 'tambah', 'tambahAkun')->name('add');
-            Route::match(['get', 'post'], '{id}/ubah', 'ubahAkun')->name('edit');
-            Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
+            Route::get('/dashboard', [FilmController::class, 'showdashboard'])->name('showdashboard');
+            Route::get('/profil/{id}', [FilmController::class, 'showprofil'])->name('showprofil');
         });
 
     Route::controller(TiketController::class)
@@ -163,16 +160,18 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
         });
 
 
-    Route::controller(PembelianController::class)
-        ->prefix('pembelians')
-        ->as('pembelians.')
+    Route::controller(PembayaranController::class)
+        ->prefix('pembayaran')
+        ->as('pembayaran.')
         ->group(function () {
-            Route::get('/index', [PembelianController::class, 'index'])->name('index');
-            Route::get('/create', [PembelianController::class, 'create'])->name('create');
-            Route::post('/store', [PembelianController::class, 'store'])->name('store');
-            Route::get('/edit/{id}', [PembelianController::class, 'edit'])->name('edit');
-            Route::post('/update/{id}', [PembelianController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}', [PembelianController::class, 'destroy'])->name('destroy');
+            Route::get('/pembayarans', [PembayaranController::class, 'index'])->name('pembayarans');
+            Route::get('/formpembayaran', [PembayaranController::class, 'create'])->name('formpembayaran');
+            Route::post('/store', [PembayaranController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [PembayaranController::class, 'show'])->name('show');
+            Route::get('/pembayaran/{id}/edit', [PembayaranController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [TiketController::class, 'update'])->name('update');
+            Route::get('/tampilkandata/{id}', [TiketController::class, 'tampilkandata'])->name('tampilkandata');
+            Route::delete('destroy/{id}', [TiketController::class, 'destroy'])->name('destroy');
         });
 
 });

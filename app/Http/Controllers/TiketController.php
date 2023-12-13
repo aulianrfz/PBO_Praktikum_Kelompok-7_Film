@@ -31,12 +31,20 @@ class TiketController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+
+        if(auth()->user()->role != 'admin'){
+            return view('page.user.pembayaran.formpembayaran');
+        }
         return view('page.admin.tiket.tikets');
     }
 
     public function create()
     {
         $data = Film::all();
+
+        if(auth()->user()->role != 'admin'){
+            return view('page.user.tiket.formtiket', compact('data'));
+        }
 
         return view('page.admin.tiket.formtiket', compact('data'));
     }

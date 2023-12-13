@@ -65,12 +65,12 @@ $links = [
             [
                 "section_text" => "Pembayaran Tiket",
                 "section_icon" => "far fa-money",
-                "section_href" => route('pembelians.create')
+                "section_href" => route('pembayaran.formpembayaran')
             ],
             [
                 "section_text" => "Histori Pembelian",
                 "section_icon" => "far fa-clock",
-                "section_href" => route('pembelians.index')
+                "section_href" => route('pembayaran.pembayarans')
             ]
         ]
     ]

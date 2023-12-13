@@ -4,7 +4,7 @@
 <div class="movie-info border-b border-gray-800">
     <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
         <div class="flex-none">
-            <img src="https://image.tmdb.org/t/p/w500//qV4fdXXUm5xNlEJ2jw7af3XxuQB.jpg" alt="poster"
+            <img src="{{ asset('storage/' . $data->photo_path) }}" alt="poster"
                 class="w-64 lg:w-96">
         </div>
         <div class="md:ml-24">
